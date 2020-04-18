@@ -19,4 +19,10 @@ test_data = get_data_from_gsheet(
     service=service, spreadsheetId=SPREADSHEET_ID, range=RANGE)
 
 test_spreadsheet = Spreadsheet(client=service, spreadsheetId=SPREADSHEET_ID)
-print(test_spreadsheet.sheets)
+
+
+for sheet in test_spreadsheet.sheets:
+    print(sheet.title)
+
+elements = test_spreadsheet.sheets[0]._sheet.get("pageElements")
+print(elements)
