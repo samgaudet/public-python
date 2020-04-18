@@ -3,6 +3,21 @@
 from gsuite.sheet import Sheet
 
 
+def create_new_spreadsheet(client, title):
+
+    request = {
+        "properties": {
+            "title": title
+        }
+    }
+
+    spreadsheet = client.spreadsheets().create(
+        body=request, fields="spreadsheetId").execute()
+
+    spreadsheetId = spreadsheet.get("spreadsheetId")
+    return spreadsheetId
+
+
 class Spreadsheet:
 
     def __init__(self, client, spreadsheetId,):
@@ -14,7 +29,7 @@ class Spreadsheet:
 
     @property
     def sheets(self):
-        return [sheet for sheet in self._spreadsheet.get("sheets")]
+        return [Sheet(sheet, self) for sheet in self._spreadsheet.get("sheets")]
 
     def create_sheet(self):
         pass
